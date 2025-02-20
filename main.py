@@ -62,21 +62,22 @@ class Cell:
         if self.has_top_wall:
             line = Line(Point(self._x1, self._y1), Point(self._x2, self._y1))
             self._win.draw_line(line, "black")
-        if self.has_left_wall: # add line object like above
-            self._win.draw_line(self._x1, self._y1, self._x1, self._y2)
-        if self.has_bottom_wall: # add line object
-            self._win.draw_line(self._x1, self._y2, self._x2, self._y2)
-        if self.has_right_wall: #add line object and then try running main.py
-            self._win.draw_line(self._x2, self._y1, self._x2, self._y2)
+        if self.has_left_wall:
+            line = Line(Point(self._x1, self._y1), Point(self._x1, self._y2))
+            self._win.draw_line(line, "black")
+        if self.has_bottom_wall:
+            line = Line(Point(self._x1, self._y2), Point(self._x2, self._y2))
+            self._win.draw_line(line, "black")
+        if self.has_right_wall: 
+            line = Line(Point(self._x2, self._y1), Point(self._x2, self._y2))
+            self._win.draw_line(line, "black")
 
 def main():
     win = Window(800,600)
-    cell1 = Cell(100, 150, 200, 250, win)
-    cell1.has_right_wall = False
+    cell1 = Cell(50, 100, 150, 200, win)
     cell1.draw()
     
-    cell2 = Cell(300, 350, 400, 450, win)
-    cell2.has_bottom_wall = False
+    cell2 = Cell(150, 200, 250, 300, win)
     cell2.draw()
     win.wait_for_close()
 
