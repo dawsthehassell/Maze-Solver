@@ -1,5 +1,6 @@
 from tkinter import Tk, BOTH, Canvas
 import time
+from maze import *
 
 class Window:
     def __init__(self, width, height):
@@ -86,22 +87,22 @@ class Cell:
 
 def main():
     win = Window(800,600)
-    # Left cell (as before)
-    cell1 = Cell(50, 50, 100, 100, win)
-    # Right cell (as before)
-    cell2 = Cell(100, 50, 150, 100, win)
-    # Bottom cell (below cell1)
-    cell3 = Cell(50, 100, 100, 150, win)
+    # Create a window first (assuming you have graphics.py)
 
-    # Draw all cells
-    cell1.draw()
-    cell2.draw()
-    cell3.draw()
-
-    # Test different moves
-    cell1.draw_move(cell2)  # should draw red line horizontally
-    cell1.draw_move(cell3)  # should draw red line vertically
-    cell2.draw_move(cell3, undo=True)  # should draw gray line diagonally
+    # Create a small test maze
+    # Parameters:
+    # - Start at position (50,50) in the window
+    # - Create a 3x3 grid
+    # - Each cell is 40x40 pixels
+    test_maze = Maze(
+        x1=100,           # start 50 pixels from left
+        y1=100,           # start 50 pixels from top
+        num_rows=6,      # small 3x3 maze
+        num_cols=6,
+        cell_size_x=60,  # cells are 40x40 pixels
+        cell_size_y=60,
+        win=win
+    )
     win.wait_for_close()
 
 if __name__ == "__main__":
