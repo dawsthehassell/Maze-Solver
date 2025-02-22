@@ -3,14 +3,16 @@ from tkinter import Tk, BOTH, Canvas
 import time
 
 class Maze:
-    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win):
+    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win=None):
+        if num_rows <= 0 or num_cols <= 0:
+            raise ValueError("Maze dimensions must be greater than 0!")
         self.x1 = x1
         self.y1 = y1
         self.num_rows = num_rows
         self.num_cols = num_cols
         self.cell_size_x = cell_size_x
         self.cell_size_y = cell_size_y
-        self.win = win
+        self._win = win
         self._create_cells()
 
     def _create_cells(self):
@@ -23,7 +25,7 @@ class Maze:
                     y1=self.y1 + row * self.cell_size_y,
                     x2=self.x1 + col * self.cell_size_x + self.cell_size_x,
                     y2=self.y1 + row * self.cell_size_y + self.cell_size_y,
-                    win=self.win
+                    win=self._win
                 )
                 column.append(new_cell)
             self._cells.append(column)
@@ -41,5 +43,5 @@ class Maze:
         self._animate()
 
     def _animate(self):
-        self.win.redraw()
-        time.sleep(0.05)
+        self._win.redraw()
+        time.sleep(0.01)
