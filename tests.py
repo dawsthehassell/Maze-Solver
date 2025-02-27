@@ -47,6 +47,18 @@ class Tests(unittest.TestCase):
         exit_cell = m4._cells[m4.num_rows-1][m4.num_cols-1]
         self.assertFalse(exit_cell.has_bottom_wall, "Exit wall should be removed")
 
+    def test_reset_visited_cells(self):
+        num_rows = 15
+        num_cols = 15
+        fake_window = Mock()
+        m5 = Maze(50, 50, num_rows, num_cols, 15, 15, win=fake_window)
+        for row in m5._cells:
+            for cell in row:
+                cell.visited = True
+        m5._reset_cells_visited()
+        for row in m5._cells:
+            for cell in row:
+                self.assertFalse(cell.visited, "All cells should have visited set to False")
 
 if __name__ == "__main__":
     unittest.main()

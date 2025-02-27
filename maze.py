@@ -64,6 +64,7 @@ class Maze:
             to_visit.append((i+1, j, "S"))
         if j > 0 and not self._cells[i][j-1].visited:
             to_visit.append((i, j-1, "W"))
+        
         if len(to_visit) == 0:
             self._draw_cell(i, j)
             return
@@ -83,6 +84,11 @@ class Maze:
                 self._cells[i][j].has_left_wall = False
                 self._cells[next_cell_i][next_cell_j].has_right_wall = False
             self._break_walls_r(next_cell_i, next_cell_j)
+
+    def _reset_cells_visited(self):
+        for row in self._cells:
+            for cell in row:
+                cell.visited = False
 
     def _animate(self):
         self._win.redraw()
