@@ -36,5 +36,17 @@ class Tests(unittest.TestCase):
         with self.assertRaises(ValueError):
             Maze(0, 0, 0, 5, 10, 10)
 
+    def test_break_entrance_exit_walls(self):
+        num_rows = 10
+        num_cols = 10
+        fake_window = Mock()
+        m4 = Maze(50, 50, num_rows, num_cols, 15, 15, win=fake_window)
+        m4._break_entrance_and_exit()
+        entrance_cell = m4._cells[0][0]
+        self.assertFalse(entrance_cell.has_top_wall, "Entrance wall should be removed")
+        exit_cell = m4._cells[m4.num_rows-1][m4.num_cols-1]
+        self.assertFalse(exit_cell.has_bottom_wall, "Exit wall should be removed")
+
+
 if __name__ == "__main__":
     unittest.main()

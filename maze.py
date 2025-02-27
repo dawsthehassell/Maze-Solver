@@ -33,6 +33,14 @@ class Maze:
             for row in range(self.num_rows):
                 self._draw_cell(col, row)
     
+    def _break_entrance_and_exit(self):
+        entrance_cell = self._cells[0][0]
+        exit_cell = self._cells[self.num_rows-1][self.num_cols-1]
+        entrance_cell.has_top_wall = False
+        exit_cell.has_bottom_wall = False
+        self._draw_cell(0, 0)
+        self._draw_cell(self.num_rows-1, self.num_cols-1)
+
     def _draw_cell(self, i, j):
         x1 = self.x1 + j * self.cell_size_x
         y1 = self.y1 + i * self.cell_size_y

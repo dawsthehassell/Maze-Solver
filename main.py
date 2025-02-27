@@ -60,18 +60,22 @@ class Cell:
         self._win = win
 
     def draw(self):
-        if self.has_top_wall:
-            line = Line(Point(self._x1, self._y1), Point(self._x2, self._y1))
-            self._win.draw_line(line, "black")
-        if self.has_left_wall:
-            line = Line(Point(self._x1, self._y1), Point(self._x1, self._y2))
-            self._win.draw_line(line, "black")
-        if self.has_bottom_wall:
-            line = Line(Point(self._x1, self._y2), Point(self._x2, self._y2))
-            self._win.draw_line(line, "black")
-        if self.has_right_wall: 
-            line = Line(Point(self._x2, self._y1), Point(self._x2, self._y2))
-            self._win.draw_line(line, "black")
+        # TOP WALL
+        line = Line(Point(self._x1, self._y1), Point(self._x2, self._y1))
+        color = "black" if self.has_top_wall else "white"
+        self._win.draw_line(line, color)
+        # LEFT WALL
+        line = Line(Point(self._x1, self._y1), Point(self._x1, self._y2))
+        color = "black" if self.has_left_wall else "white"
+        self._win.draw_line(line, color)
+        # BOTTOM WALL
+        line = Line(Point(self._x1, self._y2), Point(self._x2, self._y2))
+        color = "black" if self.has_bottom_wall else "white"
+        self._win.draw_line(line, color)
+        # RIGHT WALL
+        line = Line(Point(self._x2, self._y1), Point(self._x2, self._y2))
+        color = "black" if self.has_right_wall else "white"
+        self._win.draw_line(line, color)
 
     def draw_move(self, to_cell, undo=False):
         center_x = self._x1 + ((self._x2 - self._x1) / 2)
@@ -87,22 +91,16 @@ class Cell:
 
 def main():
     win = Window(800,600)
-    # Create a window first (assuming you have graphics.py)
-
-    # Create a small test maze
-    # Parameters:
-    # - Start at position (50,50) in the window
-    # - Create a 3x3 grid
-    # - Each cell is 40x40 pixels
     test_maze = Maze(
-        x1=100,           # start 50 pixels from left
-        y1=100,           # start 50 pixels from top
-        num_rows=6,      # small 3x3 maze
+        x1=100,
+        y1=100,
+        num_rows=6,
         num_cols=6,
-        cell_size_x=60,  # cells are 40x40 pixels
+        cell_size_x=60,
         cell_size_y=60,
         win=win
     )
+    test_maze._break_entrance_and_exit()
     win.wait_for_close()
 
 if __name__ == "__main__":
