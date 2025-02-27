@@ -58,6 +58,7 @@ class Cell:
         self._x2 = x2
         self._y2 = y2
         self._win = win
+        self.visited = False
 
     def draw(self):
         # TOP WALL
@@ -91,6 +92,7 @@ class Cell:
 
 def main():
     win = Window(800,600)
+    # UPDATE with new seed data member
     test_maze = Maze(
         x1=100,
         y1=100,

@@ -1,9 +1,9 @@
 from main import Cell, Window
 from tkinter import Tk, BOTH, Canvas
-import time
+import time, random
 
 class Maze:
-    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win=None):
+    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win=None, seed=None):
         if num_rows <= 0 or num_cols <= 0:
             raise ValueError("Maze dimensions must be greater than 0!")
         self.x1 = x1
@@ -13,6 +13,8 @@ class Maze:
         self.cell_size_x = cell_size_x
         self.cell_size_y = cell_size_y
         self._win = win
+        if seed is not None:
+            random.seed(seed)
         self._create_cells()
 
     def _create_cells(self):
@@ -49,6 +51,38 @@ class Maze:
         cell = self._cells[i][j]
         cell.draw()
         self._animate()
+
+    def _break_walls_r(self, i, j):
+        self._cells[i][j].visited = True
+        
+        to_visit = []
+        if i > 0 and not self._cells[i-1][j].visited:
+            to_visit.append((i-1, j, "N"))
+        if j < self.num_cols-1 and not self._cells[i][j+1].visited:
+            to_visit.append((i, j+1, "E"))
+        if i < self.num_rows-1 and not self._cells[i+1][j].visited:
+            to_visit.append((i+1, j, "S"))
+        if j > 0 and not self._cells[i][j-1].visited:
+            to_visit.append((i, j-1, "W"))
+        if len(to_visit) == 0:
+            self._draw_cell(i, j)
+            return
+        else:
+            random_index = random.randrange(len(to_visit))
+            next_cell_i, next_cell_j, direction = to_visit[random_index]
+            if direction == "N":
+                self._cells[i][j].has_top_wall = False
+                self._cells[next_cell_i][next_cell_j].has_bottom_wall = False
+            elif direction == "E":
+                self._cells[i][j].has_right_wall = False
+                self._cells[next_cell_i][next_cell_j].has_left_wall = False
+            elif direction == "S":
+                self._cells[i][j].has_bottom_wall = False
+                self._cells[next_cell_i][next_cell_j].has_top_wall = False
+            elif direction == "W":
+                self._cells[i][j].has_left_wall = False
+                self._cells[next_cell_i][next_cell_j].has_right_wall = False
+            self._break_walls_r(next_cell_i, next_cell_j)
 
     def _animate(self):
         self._win.redraw()
