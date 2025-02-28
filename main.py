@@ -92,8 +92,7 @@ class Cell:
 
 def main():
     win = Window(800,600)
-    # UPDATE with new seed data member
-    test_maze = Maze(
+    maze = Maze(
         x1=100,
         y1=100,
         num_rows=6,
@@ -102,7 +101,11 @@ def main():
         cell_size_y=60,
         win=win
     )
-    test_maze._break_entrance_and_exit()
+    maze._create_cells()
+    maze._break_walls_r(0, 0)
+    maze._break_entrance_and_exit()
+    maze._reset_cells_visited()
+    maze.solve()
     win.wait_for_close()
 
 if __name__ == "__main__":
